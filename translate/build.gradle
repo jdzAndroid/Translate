@@ -24,19 +24,18 @@ repositories {
     mavenCentral()
     jcenter()
 }
-group='com.jdz.translate'
-version='1.0.0'
-//uploadArchives {
-//    repositories {
-//        mavenDeployer {
-//            repository(url: uri('../repo'))
-//        }
-//    }
-//}
+
+group = 'com.jdz.translate'
+version = '1.0.0'
 
 pluginBundle {
-    website = 'http://www.gradle.org/'
-    vcsUrl = 'https://github.com/gradle/gradle'
+    mavenCoordinates {
+        groupId = "com.jdz.translate"
+        artifactId = "translate"
+        version = "1.0.0"
+    }
+    website = 'https://github.com/jdzAndroid/Translate'
+    vcsUrl = 'https://github.com/jdzAndroid/Translate'
     description = 'translate tool'  //插件描述
     tags = ['translate']  //插件的tag。可以通过这个在插件门户上搜索
 
