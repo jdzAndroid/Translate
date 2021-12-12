@@ -30,18 +30,18 @@ version = '1.0.0'
 
 pluginBundle {
     mavenCoordinates {
-        groupId = "com.jdz.translate"
+        groupId = "io.github.jdz.translate"
         artifactId = "translate"
         version = "1.0.0"
     }
     website = 'https://github.com/jdzAndroid/Translate'
     vcsUrl = 'https://github.com/jdzAndroid/Translate'
-    description = 'translate tool'  //插件描述
+    description = 'International translation plug-in'  //插件描述
     tags = ['translate']  //插件的tag。可以通过这个在插件门户上搜索
 
     plugins {
         greetingsPlugin {
-            id = 'com.jdz.translate'   //插件的id，到时候apply的插件id
+            id = 'io.github.jdz.translate'   //插件的id，到时候apply的插件id
             displayName = 'translate tool'
         }
     }

@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.jdz.translate'
+//apply plugin: 'com.jdz.translate'
 android {
     compileSdkVersion 31
     buildToolsVersion "31.0.0"
@@ -19,18 +19,18 @@ android {
     }
 }
 
-config {
-    excelFilePath 'C:\\Users\\Administrator\\Desktop\\aa\\VeryFit翻译汇总11.27-2883.xlsx'//用于获取翻译的源excel文件路径
-    languageCode 'en,de,es,fr,it,ja,ru,pt,ko,tr,cs,nl,gr'//需要翻译的国家语言代码
-    column '1,2,3,4,5,6,7,8,9,10,11,12,13'//国家所对应的翻译在源excel文件中的列编号
-    ignoreSplit '-'
-    ignoreValue ',-，-%d-1'//在比较文本时候忽略的字符,默认-杠分开
-    compareFilePath 'C:\\Users\\Administrator\\Desktop\\aa\\zh.xml'//用于查找Key的xml文件
-    outPath 'C:\\Users\\Administrator\\Desktop\\aa\\output'//生成的翻译文件存储路径
-    startLine 1//从源Excel第几行开始翻译
-    replacedValue 'X'//需要被替换的内容
-    newValue '%d'//被替换后的内容
-}
+//config {
+//    excelFilePath 'C:\\Users\\Administrator\\Desktop\\aa\\VeryFit翻译汇总11.27-2883.xlsx'//用于获取翻译的源excel文件路径
+//    languageCode 'en,de,es,fr,it,ja,ru,pt,ko,tr,cs,nl,gr'//需要翻译的国家语言代码
+//    column '1,2,3,4,5,6,7,8,9,10,11,12,13'//国家所对应的翻译在源excel文件中的列编号
+//    ignoreSplit '-'
+//    ignoreValue ',-，-%d-1'//在比较文本时候忽略的字符,默认-杠分开
+//    compareFilePath 'C:\\Users\\Administrator\\Desktop\\aa\\zh.xml'//用于查找Key的xml文件
+//    outPath 'C:\\Users\\Administrator\\Desktop\\aa\\output'//生成的翻译文件存储路径
+//    startLine 1//从源Excel第几行开始翻译
+//    replacedValue 'X'//需要被替换的内容
+//    newValue '%d'//被替换后的内容
+//}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
