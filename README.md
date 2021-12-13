@@ -2,12 +2,6 @@
 
 该插件用于Android Studio中
 
-[![Build Status][build-image]][build-url]
-[![License: MIT][license-image]][license-url]
-[![Code Coverage][coverage-image]][coverage-url]
-
-[![Gradle plugin version][gradle-plugin-badge]][gradle-plugin-link]
-
 ## 开始
 
 1，在你的modle的gradle文件中新增如下配置
