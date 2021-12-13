@@ -25,23 +25,23 @@ repositories {
     jcenter()
 }
 
-group = 'com.jdz.translate'
+group = 'com.jdzAndroid.Translate'
 version = '1.0.0'
 
 pluginBundle {
     mavenCoordinates {
-        groupId = "io.github.jdz.translate"
+        groupId = "com.jdzAndroid.Translate"
         artifactId = "translate"
         version = "1.0.0"
     }
     website = 'https://github.com/jdzAndroid/Translate'
     vcsUrl = 'https://github.com/jdzAndroid/Translate'
-    description = 'International translation plug-in'  //插件描述
-    tags = ['translate']  //插件的tag。可以通过这个在插件门户上搜索
+    description = '一个从excel文档中提取对应国家翻译到xml文件中的插件'  //插件描述
+    tags = ['translate','strings','android']  //插件的tag。可以通过这个在插件门户上搜索
 
     plugins {
         greetingsPlugin {
-            id = 'io.github.jdz.translate'   //插件的id，到时候apply的插件id
+            id = 'com.jdzAndroid.Translate'   //插件的id，到时候apply的插件id
             displayName = 'translate tool'
         }
     }
