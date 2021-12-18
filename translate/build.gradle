@@ -1,7 +1,8 @@
 apply plugin: 'groovy'
 apply plugin: 'maven'
 apply plugin: "com.gradle.plugin-publish"
-
+apply plugin: "java-gradle-plugin"
+apply plugin: "maven-publish"
 
 dependencies {
     compile gradleApi()
@@ -25,24 +26,42 @@ repositories {
     jcenter()
 }
 
-group = 'com.jdzAndroid.Translate'
+group = 'io.github.jdzAndroid'
 version = '1.0.0'
+
+// Use java-gradle-plugin to generate plugin descriptors and specify plugin ids
+gradlePlugin {
+    plugins {
+        greetingsPlugin {
+            id = 'io.github.jdzAndroid.Translate'
+            implementationClass = 'com.jdzAndroid.Translate.Translate'
+        }
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            name = 'localPluginRepository'
+            url = '../local-plugin-repository'
+        }
+    }
+}
 
 pluginBundle {
     mavenCoordinates {
-        groupId = "com.jdzAndroid.Translate"
-        artifactId = "translate"
+        groupId = "io.github.jdzAndroid"
+        artifactId = "Translate"
         version = "1.0.0"
     }
     website = 'https://github.com/jdzAndroid/Translate'
-    vcsUrl = 'https://github.com/jdzAndroid/Translate'
-    description = '一个从excel文档中提取对应国家翻译到xml文件中的插件'  //插件描述
-    tags = ['translate','strings','android']  //插件的tag。可以通过这个在插件门户上搜索
+    vcsUrl = 'https://github.com/jdzAndroid/Translate.git'
+    description = 'A plug-in that extracts corresponding countries from EXCEL documents and translates them into XML files'
 
     plugins {
         greetingsPlugin {
-            id = 'com.jdzAndroid.Translate'   //插件的id，到时候apply的插件id
             displayName = 'translate tool'
+            tags = ['translate','strings','android']
         }
     }
 }

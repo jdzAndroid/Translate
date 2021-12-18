@@ -1,49 +1,47 @@
-# gradle翻译插件
+# Gradle translation plug-in
 
-该插件用于Android Studio中
+This plug-in is used in Android studio
 
-## 开始
+## Start
 
-1，在你的modle的gradle文件中新增如下配置
+1，Add the following configuration in the gradle file of your module
 
 apply plugin: 'com.jdzAndroid.Translate'
 
-注意:config节点和android节点平级
+be careful:The config node is at the same level as the Android node
 
 config  
 {    
 
-    excelFilePath '......'//用于获取翻译的源excel文件路径
+    excelFilePath '......'//Source excel file path for obtaining translation
     
-    languageCode 'en,de,es,fr,...'//需要翻译的国家语言代码
+    languageCode 'en,de,es,fr,...'//Country language code to be translated
     
-    column '1,2,3,4,...'//国家所对应的翻译在源excel文件中的列编号
+    column '1,2,3,4,...'//The column number of the translation corresponding to the country in the source excel file
     
     ignoreSplit '-'
     
-    ignoreValue ',-，-%d-1'//在比较文本时候忽略的字符,默认-杠分开
+    ignoreValue ',-，-%d-1'//Characters ignored when comparing text, default - separated by bars
     
-    compareFilePath '......'//用于查找Key的xml文件
+    compareFilePath '......'//The XML file used to find the key
     
-    outPath '......'//生成的翻译文件存储路径
+    outPath '......'//Storage path of generated translation file
     
-    startLine 1//从源Excel第几行开始翻译
+    startLine 1//Start the translation from the row of the source excel
     
-    replacedValue 'X'//需要被替换的内容
+    replacedValue 'X'//Content to be replaced
     
-    newValue '%d'//被替换后的内容
+    newValue '%d'//Replaced content
  }
 
-在项目gradle文件中添加如下依赖
+Add the following dependencies to the project gradle file
 
 dependencies 
 {
      classpath 'com.jdz.translate:translate:1.0.0'
 }
-    
 
-如果需要执行翻译任务只需make project即可
-
+If you need to perform translation tasks, just make project
 
 ## Changelog
 - `1.0.0` - initial version
