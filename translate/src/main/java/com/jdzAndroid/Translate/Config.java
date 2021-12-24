@@ -32,6 +32,10 @@ public class Config {
     public List<String> mReplacedValueList=new ArrayList<>();
     //Replaced content list separator
     public String mNewValueSplitChar = ",";
+    //Search for the corresponding translation from the tables in Excel
+    public int mExcelSheetIndex=0;
+    //The text content used for comparison corresponds to the column in Excel
+    public int mCompareIndex=0;
     //Replaced content list
     public List<String> mNewValueList=new ArrayList<>();
 
@@ -134,5 +138,13 @@ public class Config {
                 mNewValueList.add(newValue);
             }
         }
+    }
+
+    public void sheetIndex(int sheetIndex){
+        mExcelSheetIndex=sheetIndex;
+    }
+
+    public void compareIndex(int compareIndex){
+        mCompareIndex=compareIndex;
     }
 }

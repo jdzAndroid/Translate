@@ -1,5 +1,6 @@
 package com.jdzAndroid.Translate;
 
+import org.apache.commons.math3.analysis.function.Max;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -47,28 +48,25 @@ public class Translate implements Plugin<Project> {
                     System.out.println("The size of the text list to be replaced and the new value list after replacement must be the same");
                     return;
                 }
+                File outputFile=new File(config.mOutPath);
+                if (!outputFile.exists())outputFile.mkdirs();
                 File file = new File(config.mExcelFilePath);
                 XSSFWorkbook xssfWorkbook = new XSSFWorkbook(file);
-                XSSFSheet xssfSheet = xssfWorkbook.getSheetAt(0);
-                int firstRowNum = xssfSheet.getFirstRowNum();
+                XSSFSheet xssfSheet = xssfWorkbook.getSheetAt(Math.max(0,config.mExcelSheetIndex));
+                int firstRowNum = Math.max(xssfSheet.getFirstRowNum(),config.mStartLine);
                 int lastRowNum = xssfSheet.getLastRowNum();
-                if (config.mStartLine > firstRowNum) {
-                    firstRowNum = config.mStartLine;
-                }
-                if (config.mEndLine >= firstRowNum && config.mEndLine <= lastRowNum) {
-                    lastRowNum = config.mEndLine;
-                }
+                if (config.mEndLine>=firstRowNum&&config.mEndLine<=lastRowNum)lastRowNum=config.mEndLine;
+
                 DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
                 List<Document> documentList = new ArrayList<>();
                 List<Element> elementList = new ArrayList<>();
-                int languageCodeSize = config.mLanguageCodeList.size();
                 Document compareDocument = documentBuilder.parse(config.mCompareFilePath);
                 NodeList compareRootNode = compareDocument.getElementsByTagName("string");
                 int compareRootNodeSize = compareRootNode.getLength();
                 int ignoreValueSize = config.mIgnoreValueList.size();
                 List<Pair> compareList = new ArrayList<>();
-                if (compareRootNodeSize > 0 && ignoreValueSize > 0) {
+                if (compareRootNodeSize > 0) {
                     for (int i = 0; i < compareRootNodeSize; i++) {
                         Node item = compareRootNode.item(i);
                         String itemContent = item.getTextContent();
@@ -83,18 +81,19 @@ public class Translate implements Plugin<Project> {
                                 item.getTextContent()));
                     }
                 }
-                int compareListSize = compareList.size();
+                int languageCodeSize = config.mLanguageCodeList.size();
                 for (int i = 0; i < languageCodeSize; i++) {
                     Document document = documentBuilder.newDocument();
                     document.setXmlStandalone(true);
                     elementList.add(document.createElement("resources"));
                     documentList.add(document);
                 }
+                int compareListSize = compareList.size();
 
                 for (int i = firstRowNum; i <= lastRowNum; i++) {
                     XSSFRow row = xssfSheet.getRow(i);
                     if (row == null) continue;
-                    XSSFCell firstCell = row.getCell(0);
+                    XSSFCell firstCell = row.getCell(config.mCompareIndex);
                     if (firstCell == null) continue;
                     String copySourceContent = firstCell.toString().replaceAll(" ", "");
                     if (config.mIgnoreValueList.size() > 0) {
@@ -105,15 +104,14 @@ public class Translate implements Plugin<Project> {
                     String key = null;
                     for (int j = 0; j < compareListSize; j++) {
                         Pair itemPair = compareList.get(j);
-                        if (itemPair == null) continue;
+                        if (itemPair==null)continue;
                         if (copySourceContent.contentEquals(itemPair.value)) {
                             key = itemPair.key;
-                            compareList.set(j, null);
+                            compareList.set(j,null);
                             break;
                         }
                     }
                     if (key == null || key.length() == 0) continue;
-                    if (i<5)System.out.println("value="+copySourceContent);
                     for (int j = 0; j < languageCodeSize; j++) {
                         XSSFCell cell = row.getCell(config.mColumnList.get(j));
                         if (cell != null) {
