@@ -31,7 +31,7 @@ config {
     replacedValue 'medium'//需要被替换的内容
     newValue '%medium'//被替换后的内容
     sheetIndex 0
-    compareIndex 3
+    compareIndex 0
 }
 
 dependencies {
