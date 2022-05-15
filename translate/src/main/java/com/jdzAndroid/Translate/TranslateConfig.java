@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Config {
+public class TranslateConfig {
     public String mExcelFilePath;
     //The national language code separator must be written in front of the national language code if it needs to be defined
     public String mLanguageCodeSplitChar = ",";

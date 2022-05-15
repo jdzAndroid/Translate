@@ -19,19 +19,26 @@ android {
     }
 }
 
-config {
-    excelFilePath 'C:\\Users\\Administrator\\Desktop\\aa\\VeryFit翻译汇总12.20-2883.xlsx'//用于获取翻译的源excel文件路径
-    languageCode 'zh,en,de,es,fr,it,ja,ru,pt,ko,tr,cs,nl,gr'//需要翻译的国家语言代码
-    column '3,4,5,6,7,8,9,10,11,12,13,14,15,16'//国家所对应的翻译在源excel文件中的列编号
-    ignoreSplit '-'
-    ignoreValue ',-&gt;-'//在比较文本时候忽略的字符,默认-杠分开
-    compareFilePath 'C:\\Users\\Administrator\\Desktop\\aa\\zh.xml'//用于查找Key的xml文件
-    outPath 'C:\\Users\\Administrator\\Desktop\\aa\\output'//生成的翻译文件存储路径
-    startLine 1//从源Excel第几行开始翻译
-    replacedValue 'medium'//需要被替换的内容
-    newValue '%medium'//被替换后的内容
-    sheetIndex 0
-    compareIndex 0
+//config {
+//    excelFilePath 'C:\\Users\\Administrator\\Desktop\\aa\\VeryFit翻译汇总12.20-2883.xlsx'//用于获取翻译的源excel文件路径
+//    languageCode 'zh,en,de,es,fr,it,ja,ru,pt,ko,tr,cs,nl,gr'//需要翻译的国家语言代码
+//    column '0,1,2,3,4,5,6,7,8,9,10,11,12,13'//国家所对应的翻译在源excel文件中的列编号
+//    ignoreSplit '-'
+//    ignoreValue ',-;-\\$'//在比较文本时候忽略的字符,默认-杠分开
+//    compareFilePath 'C:\\Users\\Administrator\\Desktop\\aa\\zh.xml'//用于查找Key的xml文件
+//    outPath 'C:\\Users\\Administrator\\Desktop\\aa\\output'//生成的翻译文件存储路径
+//    startLine 1//从源Excel第几行开始翻译
+//    replacedValue '最'//需要被替换的内容
+//    newValue 'medium'//被替换后的内容
+//    sheetIndex 0
+//    compareIndex 0
+//}
+xml2xls{
+    sourcePath 'C:\\Users\\Administrator\\Desktop\\aa\\zh.xml'
+    targetPath 'C:\\Users\\Administrator\\Desktop\\aa'
+    targetFileName 'zh'
+    keyName 'name'
+    names 'zh'
 }
 
 dependencies {

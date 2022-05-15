@@ -6,11 +6,11 @@ This plug-in is used in Android studio
 
 1，Add the following configuration in the gradle file of your module
 
-apply plugin: 'com.jdzAndroid.Translate'
+apply plugin: 'com.jdzAndroid.CenterTask'
 
-be careful:The config node is at the same level as the Android node
+be careful:The translateConfig node is at the same level as the Android node
 
-config  
+translateConfig
 {    
 
     excelFilePath '......'//Source excel file path for obtaining translation
