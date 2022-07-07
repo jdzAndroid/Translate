@@ -38,6 +38,8 @@ public class TranslateConfig {
     public int mCompareIndex=0;
     //Replaced content list
     public List<String> mNewValueList=new ArrayList<>();
+    //placeholder list
+    public List<String> mPlaceHolderList=new ArrayList();
 
 
     public void excelFilePath(String excelFilePath) {
@@ -146,5 +148,19 @@ public class TranslateConfig {
 
     public void compareIndex(int compareIndex){
         mCompareIndex=compareIndex;
+    }
+
+    public void placeholder(String holderList){
+        System.out.println(holderList);
+        mPlaceHolderList.clear();
+        if (holderList!=null&&holderList.length()>0){
+            String[] valueList=holderList.split(",");
+            if (valueList!=null&&valueList.length>0){
+                for (String value : valueList) {
+                    if (value==null||value.replaceAll(" ","").length()==0)continue;
+                    mPlaceHolderList.add(value);
+                }
+            }
+        }
     }
 }

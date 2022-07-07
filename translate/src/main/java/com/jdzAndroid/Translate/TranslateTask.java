@@ -13,7 +13,11 @@ import org.w3c.dom.NodeList;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -79,6 +83,8 @@ public class TranslateTask implements BaseTask {
             int compareRootNodeSize = compareRootNode.getLength();
             int ignoreValueSize = mTranslateConfig.mIgnoreValueList.size();
             List<Pair> compareList = new ArrayList<>();
+            List<Pair> unComparePlaceHolderList = new ArrayList<>();
+            Map<String, TreeMap<Integer, String>> valueList = new HashMap<>();
             if (compareRootNodeSize > 0) {
                 for (int i = 0; i < compareRootNodeSize; i++) {
                     Node item = compareRootNode.item(i);
@@ -107,7 +113,7 @@ public class TranslateTask implements BaseTask {
                 if (row == null) continue;
                 XSSFCell firstCell = row.getCell(mTranslateConfig.mCompareIndex);
                 if (firstCell == null) continue;
-                String copySourceContent = firstCell.toString().replaceAll(" ", "");
+                String copySourceContent = firstCell.toString().trim();
                 if (mTranslateConfig.mIgnoreValueList.size() > 0) {
                     for (String ignoreValue : mTranslateConfig.mIgnoreValueList) {
                         copySourceContent = copySourceContent.replaceAll(ignoreValue, "");
@@ -124,6 +130,7 @@ public class TranslateTask implements BaseTask {
                     }
                 }
                 if (key == null || key.length() == 0) continue;
+                valueList.clear();
                 for (int j = 0; j < languageCodeSize; j++) {
                     XSSFCell cell = row.getCell(mTranslateConfig.mColumnList.get(j));
                     if (cell != null) {
@@ -138,6 +145,47 @@ public class TranslateTask implements BaseTask {
                         }
                         itemElement.setTextContent(sourceContent);
                         elementList.get(j).appendChild(itemElement);
+                        valueList.put(sourceContent, new TreeMap<>((previous, next) -> next - previous));
+                    }
+                }
+                if (valueList.size() > 0 && mTranslateConfig.mPlaceHolderList.size() > 0) {
+                    Set<String> keySet = valueList.keySet();
+                    for (String itemKey : keySet) {
+                        if (itemKey == null || itemKey.replaceAll(" ", "").length() == 0) continue;
+                        TreeMap<Integer, String> itemTreeMap = valueList.get(itemKey);
+                        for (String itemPlaceHolder : mTranslateConfig.mPlaceHolderList) {
+                            int index = -1;
+                            do {
+                                index = itemKey.indexOf(itemPlaceHolder, index + 1);
+                                if (index > -1) {
+                                    itemTreeMap.put(index, itemPlaceHolder);
+                                    index += itemPlaceHolder.length();
+                                }
+                            } while (index > -1);
+                        }
+                    }
+                    List<StringBuilder> builderList = new ArrayList<>();
+                    for (String itemKey : keySet) {
+                        TreeMap<Integer, String> holderList = valueList.get(itemKey);
+                        StringBuilder builder = new StringBuilder();
+                        for (String placeHolder : holderList.values()) {
+                            if (placeHolder==null||placeHolder.replaceAll(" ","").length()==0)continue;
+                            if (builder.length() == 0) {
+                                builder.append(placeHolder);
+                            } else {
+                                builder.append("," + placeHolder);
+                            }
+                        }
+                        builderList.add(builder);
+                    }
+                    int size = builderList.size();
+                    for (int index = 0; index < size - 2; index++) {
+                        String currBuilder = builderList.get(index).toString();
+                        String preBuilder = builderList.get(index + 1).toString();
+                        if (!currBuilder.equals(preBuilder)) {
+                            unComparePlaceHolderList.add(new Pair(key, firstCell.toString(), firstCell.toString()));
+                            break;
+                        }
                     }
                 }
             }
@@ -163,6 +211,22 @@ public class TranslateTask implements BaseTask {
             }
             failedDocument.appendChild(failedRootElement);
             transformer.transform(new DOMSource(failedDocument), new StreamResult(new File(mTranslateConfig.mOutPath + "\\failed.xml")));
+
+
+            //The output is a translation that placeHolder unCompare
+            Document unCompareDocument = documentBuilder.newDocument();
+            unCompareDocument.setXmlStandalone(true);
+            Element unCompareRootElement = unCompareDocument.createElement("resources");
+            for (Pair itemPair : unComparePlaceHolderList) {
+                if (itemPair == null) continue;
+                printLog("Translation placeHolder unCompare value=" + itemPair.toString());
+                Element itemElement = unCompareDocument.createElement("string");
+                itemElement.setAttribute("name", itemPair.key);
+                itemElement.setTextContent(itemPair.sourceValue);
+                unCompareRootElement.appendChild(itemElement);
+            }
+            unCompareDocument.appendChild(unCompareRootElement);
+            transformer.transform(new DOMSource(unCompareDocument), new StreamResult(new File(mTranslateConfig.mOutPath + "\\uncompare.xml")));
             xssfWorkbook.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -180,6 +244,15 @@ public class TranslateTask implements BaseTask {
             this.key = key;
             this.value = value;
             this.sourceValue = sourceValue;
+        }
+
+        @Override
+        public String toString() {
+            return "Pair{" +
+                    "key='" + key + '\'' +
+                    ", value='" + value + '\'' +
+                    ", sourceValue='" + sourceValue + '\'' +
+                    '}';
         }
     }
 }
