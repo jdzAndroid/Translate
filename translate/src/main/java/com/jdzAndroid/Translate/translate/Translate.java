@@ -116,7 +116,17 @@ public class Translate implements Plugin<Project> {
                     Pair itemPair = compareList.get(j);
                     if (itemPair == null) continue;
                     if (copySourceContent.contentEquals(itemPair.value)) {
-                        key = itemPair.key;
+                        try {
+                            if (mTranslateConfig.mKeyIndex > -1) {
+                                XSSFCell keyCell = row.getCell(mTranslateConfig.mKeyIndex);
+                                key = keyCell.toString().trim();
+                            } else {
+                                key = itemPair.key;
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            key = itemPair.key;
+                        }
                         compareList.set(j, null);
                         break;
                     }
@@ -180,4 +190,15 @@ public class Translate implements Plugin<Project> {
             this.sourceValue = sourceValue;
         }
     }
+
+//    generateMetadataFileForGreetingsPluginPluginMarkerMavenPublication - Generates the Gradle metadata file for publication 'greetingsPluginPluginMarkerMaven'.
+//    generateMetadataFileForPluginMavenPublication - Generates the Gradle metadata file for publication 'pluginMaven'.
+//    generatePomFileForGreetingsPluginPluginMarkerMavenPublication - Generates the Maven POM file for publication 'greetingsPluginPluginMarkerMaven'.
+//    generatePomFileForPluginMavenPublication - Generates the Maven POM file for publication 'pluginMaven'.
+//    publish - Publishes all publications produced by this project.
+//            publishGreetingsPluginPluginMarkerMavenPublicationToLocalPluginRepositoryRepository - Publishes Maven publication 'greetingsPluginPluginMarkerMaven' to Maven repository 'localPluginRepository'.
+//    publishGreetingsPluginPluginMarkerMavenPublicationToMavenLocal - Publishes Maven publication 'greetingsPluginPluginMarkerMaven' to the local Maven repository.
+//            publishPluginMavenPublicationToLocalPluginRepositoryRepository - Publishes Maven publication 'pluginMaven' to Maven repository 'localPluginRepository'.
+//    publishPluginMavenPublicationToMavenLocal - Publishes Maven publication 'pluginMaven' to the local Maven repository.
+//            publishToMavenLocal - Publishes all Maven publications produced by this project to the local Maven cac
 }

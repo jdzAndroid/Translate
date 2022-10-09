@@ -24,27 +24,39 @@ config {
     languageCode 'zh,en,de,es,fr,it,ja,ru,pt,ko,tr,cs,nl,el,sk'//需要翻译的国家语言代码
     column '4,5,6,7,8,9,10,11,12,13,14,15,16,17,15'//国家所对应的翻译在源excel文件中的列编号
     ignoreSplit ','
-    ignoreValue '%d,%s,1.,2.,3.,%1d,%2d,%3d,%4d'//在比较文本时候忽略的字符,默认-杠分开
+    ignoreValue '%d,%s,%1\\$s,%2\\$s,%3\\$s,%4\\$s,%1d,%2d'//在比较文本时候忽略的字符,默认-杠分开
     compareFilePath 'D:\\cc\\zh.xml'//用于查找Key的xml文件
     outPath 'D:\\cc\\output'//生成的翻译文件存储路径
     startLine 0//从源Excel第几行开始翻译
     replacedValue '%d,%1d,%2d,%3d,%4d'//需要被替换的内容
-    newValue '%s,%1\$s,%2\$s,%3\$s,%4\$s'//被替换后的内容
+    newValue '%s,%1\\$s,%2\\$s,%3\\$s,%4\\$s'//被替换后的内容
     sheetIndex 0
     compareIndex 4
+    keyIndex 1
 }
 
-findKey {
-    startLine 26
-    endLine 4328
-    excelFilePath 'D:\\cc\\cc.xlsx'//用于获取翻译的源excel文件路径
-    compareFilePath 'D:\\cc\\zh.xml'//用于查找Key的xml文件
-    outPath 'D:\\cc\\output'//生成的翻译文件存储路径
-    ignoreSplit  ':'
-    ignoreValue  '%d:%s:1.:2.:3.:%1d:%2d:%3d:%4d:%1$s:%2$s:%3$s:%4$s:%1$d:%2$d:%3$s:%4$s:，:,'//在比较文本时候忽略的字符,默认-杠分开
-    compareIndex 4
-    sheetIndex 1
-}
+//config {
+//    excelFilePath 'D:\\cc\\cc.xlsx'//用于获取翻译的源excel文件路径
+//    languageCode 'zh,en,de,es,fr,it,ja,ru,pt,ko,tr,cs,nl,gr'//需要翻译的国家语言代码
+//    column '0,1,2,3,4,5,6,7,8,9,10,11,12,13'//国家所对应的翻译在源excel文件中的列编号
+//    ignoreSplit '-'
+//    ignoreValue ',-;-\\$,%1$s,%2$s,%3$s'//在比较文本时候忽略的字符,默认-杠分开
+//    compareFilePath 'D:\\cc\\zh.xml'//用于查找Key的xml文件
+//    outPath 'D:\\cc\\output'//生成的翻译文件存储路径
+//    startLine 1//从源Excel第几行开始翻译
+//    replacedValue '最'//需要被替换的内容
+//    newValue 'medium'//被替换后的内容
+//    sheetIndex 0
+//    compareIndex 0
+//    placeholder '%1\$s,%2\$s,%3\$s'
+//}
+//xml2xls{
+//    sourcePath 'C:\\Users\\Administrator\\Desktop\\aa\\zh.xml'
+//    targetPath 'C:\\Users\\Administrator\\Desktop\\aa'
+//    targetFileName 'zh'
+//    keyName 'name'
+//    names 'zh'
+//}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
