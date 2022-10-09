@@ -27,14 +27,14 @@ repositories {
 }
 
 group = 'io.github.jdzAndroid'
-version = '1.0.5'
+version = '1.0.7'
 
 // Use java-gradle-plugin to generate plugin descriptors and specify plugin ids
 gradlePlugin {
     plugins {
         greetingsPlugin {
             id = 'io.github.jdzAndroid.Translate'
-            implementationClass = 'com.jdzAndroid.Translate.translate.Translate'
+            implementationClass = 'com.jdzAndroid.Translate.manager.TaskManager'
         }
     }
 }
@@ -52,7 +52,7 @@ pluginBundle {
     mavenCoordinates {
         groupId = "io.github.jdzAndroid"
         artifactId = "Translate"
-        version = "1.0.5"
+        version = "1.0.7"
     }
     website = 'https://github.com/jdzAndroid/Translate'
     vcsUrl = 'https://github.com/jdzAndroid/Translate.git'

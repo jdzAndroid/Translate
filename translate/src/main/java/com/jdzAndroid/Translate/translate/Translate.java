@@ -1,14 +1,11 @@
 package com.jdzAndroid.Translate.translate;
 
-import com.jdzAndroid.Translate.findkey.FindKey;
-import com.jdzAndroid.Translate.findkey.FindKeyConfig;
+import com.jdzAndroid.Translate.bean.Pair;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.gradle.api.Plugin;
-import org.gradle.api.Project;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -26,16 +23,11 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-public class Translate implements Plugin<Project> {
-    private TranslateConfig mTranslateConfig;
-    private FindKeyConfig mFindKeyConfig;
+public class Translate {
+    private final TranslateConfig mTranslateConfig;
 
-    @Override
-    public void apply(Project project) {
-        mTranslateConfig = project.getExtensions().create("config", TranslateConfig.class);
-        mFindKeyConfig = project.getExtensions().create("findKey", FindKeyConfig.class);
-        project.getTasks().register("translate", task -> translate());
-        project.getTasks().register("findKey", task -> new FindKey(mFindKeyConfig).findKey());
+    public Translate(TranslateConfig translateConfig) {
+        mTranslateConfig = translateConfig;
     }
 
     public void translate() {
@@ -112,6 +104,7 @@ public class Translate implements Plugin<Project> {
                     }
                 }
                 String key = null;
+                String oldKey=null;
                 for (int j = 0; j < compareListSize; j++) {
                     Pair itemPair = compareList.get(j);
                     if (itemPair == null) continue;
@@ -127,6 +120,7 @@ public class Translate implements Plugin<Project> {
                             e.printStackTrace();
                             key = itemPair.key;
                         }
+                        oldKey=itemPair.key;
                         compareList.set(j, null);
                         break;
                     }
@@ -139,6 +133,9 @@ public class Translate implements Plugin<Project> {
                         Document document = documentList.get(j);
                         Element itemElement = document.createElement("string");
                         itemElement.setAttribute("name", key);
+                        if (mTranslateConfig.mShowOldKey){
+                            itemElement.setAttribute("oldKey",oldKey);
+                        }
                         for (int r = 0; r < replacedValueListSize; r++) {
                             String replacedValue = mTranslateConfig.mReplacedValueList.get(r);
                             String newValue = mTranslateConfig.mNewValueList.get(r);
@@ -176,29 +173,4 @@ public class Translate implements Plugin<Project> {
             e.printStackTrace();
         }
     }
-
-    public static class Pair {
-        public String key;
-        //Store filtered translations
-        public String value;
-        //Store translations before filtering
-        public String sourceValue;
-
-        public Pair(String key, String value, String sourceValue) {
-            this.key = key;
-            this.value = value;
-            this.sourceValue = sourceValue;
-        }
-    }
-
-//    generateMetadataFileForGreetingsPluginPluginMarkerMavenPublication - Generates the Gradle metadata file for publication 'greetingsPluginPluginMarkerMaven'.
-//    generateMetadataFileForPluginMavenPublication - Generates the Gradle metadata file for publication 'pluginMaven'.
-//    generatePomFileForGreetingsPluginPluginMarkerMavenPublication - Generates the Maven POM file for publication 'greetingsPluginPluginMarkerMaven'.
-//    generatePomFileForPluginMavenPublication - Generates the Maven POM file for publication 'pluginMaven'.
-//    publish - Publishes all publications produced by this project.
-//            publishGreetingsPluginPluginMarkerMavenPublicationToLocalPluginRepositoryRepository - Publishes Maven publication 'greetingsPluginPluginMarkerMaven' to Maven repository 'localPluginRepository'.
-//    publishGreetingsPluginPluginMarkerMavenPublicationToMavenLocal - Publishes Maven publication 'greetingsPluginPluginMarkerMaven' to the local Maven repository.
-//            publishPluginMavenPublicationToLocalPluginRepositoryRepository - Publishes Maven publication 'pluginMaven' to Maven repository 'localPluginRepository'.
-//    publishPluginMavenPublicationToMavenLocal - Publishes Maven publication 'pluginMaven' to the local Maven repository.
-//            publishToMavenLocal - Publishes all Maven publications produced by this project to the local Maven cac
 }

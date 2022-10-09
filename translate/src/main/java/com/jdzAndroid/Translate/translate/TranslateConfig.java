@@ -40,6 +40,8 @@ public class TranslateConfig {
     public List<String> mNewValueList=new ArrayList<>();
     //Key值在Excel中的位置
     public int mKeyIndex=-1;
+    //是否显示旧的Key值
+    public boolean mShowOldKey=false;
 
 
     public void excelFilePath(String excelFilePath) {
@@ -152,5 +154,9 @@ public class TranslateConfig {
 
     public void keyIndex(int keyIndex){
         mKeyIndex=keyIndex;
+    }
+
+    public void showOldKey(boolean showOldKey){
+        mShowOldKey=showOldKey;
     }
 }

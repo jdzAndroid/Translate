@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">TranslateTool</string>
+    <string name="a" name2="a2" name3="a">是否同步Veryfit数据%1$s到苹果%2$s健康%3$s</string>
+    <string name="b" name2="b2" name3="a">歌曲名称</string>
+    <string name="c" name2="c2" name3="a">偏低值</string>
+    <string name="d" name2="d2" name3="a">什么是血氧饱和度</string>
+    <string name="e" name2="e2" name3="a">血氧饱和度测量注意事项</string>
+    <string name="f" name2="f2" name3="a">根据运动状态动态调整监测频率，24小时智能监测您的心率</string>
+    <string name="g" name2="g2" name3="a">非活动状态下，心率持续10分钟以上都超过限定值时提醒</string>
+    <string name="h" name2="h2" name3="a">非活动状态下，心率持续10分钟以上都低于限定值时提醒</string>
 </resources>

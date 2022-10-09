@@ -1,6 +1,6 @@
 package com.jdzAndroid.Translate.findkey;
 
-import com.jdzAndroid.Translate.translate.Translate;
+import com.jdzAndroid.Translate.bean.Pair;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -27,7 +27,7 @@ import javax.xml.transform.stream.StreamResult;
  * Find key by value
  */
 public class FindKey {
-    private FindKeyConfig mConfig;
+    private final FindKeyConfig mConfig;
 
     public FindKey(FindKeyConfig config) {
         mConfig = config;
@@ -63,7 +63,7 @@ public class FindKey {
                 System.out.println("excelSheetIndex is invalid");
                 return;
             }
-            List<String> unfindList = new ArrayList<>();
+            List<String> unFindList = new ArrayList<>();
             File outputFile = new File(mConfig.mOutPath);
             if (!outputFile.exists() || !outputFile.isDirectory()) outputFile.mkdirs();
             File file = new File(mConfig.mExcelFilePath);
@@ -75,7 +75,7 @@ public class FindKey {
             NodeList compareRootNode = compareDocument.getElementsByTagName("string");
             int compareRootNodeSize = compareRootNode.getLength();
             int ignoreValueSize = mConfig.mIgnoreValueList.size();
-            List<Translate.Pair> compareList = new ArrayList<>();
+            List<Pair> compareList = new ArrayList<>();
             System.out.println("compareRootNodeSize=" + compareRootNodeSize);
             if (compareRootNodeSize > 0) {
                 for (int i = 0; i < compareRootNodeSize; i++) {
@@ -88,7 +88,7 @@ public class FindKey {
                             itemContent = itemContent.replaceAll(ignoreValue, "");
                         }
                     }
-                    compareList.add(new Translate.Pair(item.getAttributes().getNamedItem("name").getNodeValue(), itemContent,
+                    compareList.add(new Pair(item.getAttributes().getNamedItem("name").getNodeValue(), itemContent,
                             item.getTextContent()));
                 }
             }
@@ -117,7 +117,7 @@ public class FindKey {
                     System.out.println("copySourceContent=" + copySourceContent);
                     String key = null;
                     for (int j = 0; j < compareListSize; j++) {
-                        Translate.Pair itemPair = compareList.get(j);
+                        Pair itemPair = compareList.get(j);
                         if (itemPair == null) continue;
                         if (copySourceContent.contentEquals(itemPair.value)) {
                             key = itemPair.key;
@@ -126,7 +126,7 @@ public class FindKey {
                     }
                     System.out.println("key=" + key);
                     if (key == null || key.length() == 0) {
-                        unfindList.add(firstCell.toString());
+                        unFindList.add(firstCell.toString());
                         continue;
                     }
                     XSSFCell cell = row.getCell(mConfig.mCompareIndex);
@@ -150,9 +150,9 @@ public class FindKey {
             Document failedDocument = documentBuilder.newDocument();
             failedDocument.setXmlStandalone(true);
             Element failedRootElement = failedDocument.createElement("resources");
-            int size = unfindList.size();
+            int size = unFindList.size();
             for (int index = 0; index < size; index++) {
-                String value = unfindList.get(index);
+                String value = unFindList.get(index);
                 if (value == null || value.length() == 0) continue;
                 Element itemElement = failedDocument.createElement("string");
                 itemElement.setAttribute("name", String.valueOf(index));
