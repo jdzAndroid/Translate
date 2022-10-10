@@ -4,9 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class RemoveKeyConfig {
-    //需要移除Key的xml文件所在的路径（可以传目录和指定文件路径）
     public List<String> mFilePathList;
-    //需要移除的Key列表
     public List<String> mKeyList;
 
     public void excludeKeyList(String... keyList){

@@ -18,9 +18,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-/**
- * 移除XML中制定的属性
- */
 public class RemoveKey {
     private final String TAG="RemoveKey======";
     private RemoveKeyConfig mRemoveKeyConfig;
@@ -55,9 +52,6 @@ public class RemoveKey {
 
     }
 
-    /**
-     *解析并生成新的文件内容
-     */
     private void resolve(DocumentBuilder documentBuilder,List<Document> documentList,String filePath,List<String>keyNameList){
         if (filePath==null||filePath.length()==0){
             System.out.println(TAG.concat("file path is empty"));

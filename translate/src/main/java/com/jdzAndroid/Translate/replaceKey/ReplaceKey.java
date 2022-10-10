@@ -56,7 +56,7 @@ public class ReplaceKey {
             Document document = documentBuilder.parse(mReplaceKeyConfig.mKeyFilePath);
             NodeList nodeList = document.getElementsByTagName("string");
             String preFix = "R.string.";
-            String prefix_xml = "@string/";
+            String prefix_xml = "\"@string/%s\"";
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node itemNode = nodeList.item(i);
                 Node oldKeyNode=itemNode.getAttributes().getNamedItem(mReplaceKeyConfig.mOldKeyNodeName);
@@ -66,7 +66,7 @@ public class ReplaceKey {
                 String newKeyValue = newKeyNode.getNodeValue();
                 if (oldKeyValue != null && oldKeyValue.length() > 0 && newKeyValue != null && newKeyValue.length() > 0) {
                     keyPairList.add(new KeyPair(preFix.concat(oldKeyValue), preFix.concat(newKeyValue)));
-                    keyPairList.add(new KeyPair(prefix_xml.concat(oldKeyValue), prefix_xml.concat(newKeyValue)));
+                    keyPairList.add(new KeyPair(String.format(prefix_xml,oldKeyValue), String.format(prefix_xml,newKeyValue)));
                 }
             }
         } catch (Exception e) {
