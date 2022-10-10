@@ -20,7 +20,7 @@ import javax.xml.transform.stream.StreamResult;
 
 public class RemoveKey {
     private final String TAG="RemoveKey======";
-    private RemoveKeyConfig mRemoveKeyConfig;
+    private final RemoveKeyConfig mRemoveKeyConfig;
 
     public RemoveKey(RemoveKeyConfig removeKeyConfig) {
         mRemoveKeyConfig = removeKeyConfig;

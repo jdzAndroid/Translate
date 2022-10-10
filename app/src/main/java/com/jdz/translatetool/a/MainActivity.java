@@ -1,8 +1,10 @@
-package com.jdz.translatetool;
+package com.jdz.translatetool.a;
+
+import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
+import com.jdz.translatetool.R;
 
 public class MainActivity extends AppCompatActivity {
     @Override

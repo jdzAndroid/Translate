@@ -9,6 +9,7 @@ public class ReplaceKeyConfig {
     public String mOldKeyNodeName;
     public String mNewKeyNodeName;
     public List<String> mCodeFilePathList;
+    public int mWorkThreadCount=3;
 
     public void keyFilePath(String keyFilePath){
         mKeyFilePath=keyFilePath;
@@ -26,5 +27,10 @@ public class ReplaceKeyConfig {
         if (codeFilePath==null||codeFilePath.length==0)return;
         mCodeFilePathList=new ArrayList<>();
         mCodeFilePathList.addAll(Arrays.asList(codeFilePath));
+    }
+
+    public void workThreadCount(int workThreadCount){
+        if (workThreadCount<=0)return;
+        mWorkThreadCount=workThreadCount;
     }
 }

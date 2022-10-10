@@ -13,16 +13,18 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-/**
- * 从代码中查找指定key并替换成新的Key
- */
 public class ReplaceKey {
     private final String TAG = "ReplaceKey=======";
-    private ReplaceKeyConfig mReplaceKeyConfig;
+    private final ReplaceKeyConfig mReplaceKeyConfig;
+    private final LinkedBlockingQueue<File> mChildFileList = new LinkedBlockingQueue<>();
+    private int mTotalFileCount = 0;
+    private final AtomicInteger mCompleteFileCount = new AtomicInteger(0);
 
     public ReplaceKey(ReplaceKeyConfig mReplaceKeyConfig) {
         this.mReplaceKeyConfig = mReplaceKeyConfig;
@@ -59,14 +61,14 @@ public class ReplaceKey {
             String prefix_xml = "\"@string/%s\"";
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node itemNode = nodeList.item(i);
-                Node oldKeyNode=itemNode.getAttributes().getNamedItem(mReplaceKeyConfig.mOldKeyNodeName);
-                Node newKeyNode=itemNode.getAttributes().getNamedItem(mReplaceKeyConfig.mNewKeyNodeName);
-                if (oldKeyNode==null||newKeyNode==null)continue;
+                Node oldKeyNode = itemNode.getAttributes().getNamedItem(mReplaceKeyConfig.mOldKeyNodeName);
+                Node newKeyNode = itemNode.getAttributes().getNamedItem(mReplaceKeyConfig.mNewKeyNodeName);
+                if (oldKeyNode == null || newKeyNode == null) continue;
                 String oldKeyValue = oldKeyNode.getNodeValue();
                 String newKeyValue = newKeyNode.getNodeValue();
                 if (oldKeyValue != null && oldKeyValue.length() > 0 && newKeyValue != null && newKeyValue.length() > 0) {
                     keyPairList.add(new KeyPair(preFix.concat(oldKeyValue), preFix.concat(newKeyValue)));
-                    keyPairList.add(new KeyPair(String.format(prefix_xml,oldKeyValue), String.format(prefix_xml,newKeyValue)));
+                    keyPairList.add(new KeyPair(String.format(prefix_xml, oldKeyValue), String.format(prefix_xml, newKeyValue)));
                 }
             }
         } catch (Exception e) {
@@ -78,24 +80,31 @@ public class ReplaceKey {
         }
 
         for (String itemFilePath : mReplaceKeyConfig.mCodeFilePathList) {
-            resolveFile(itemFilePath, keyPairList);
+            resolveFile(itemFilePath);
         }
+        mTotalFileCount=mChildFileList.size();
+        if (mTotalFileCount==0){
+            System.out.println(TAG.concat("not found any file!!!"));
+            return;
+        }
+        mCompleteFileCount.set(0);
+        reallyStartReplaceKey(keyPairList);
     }
 
-    private void resolveFile(String filePath, List<KeyPair> keyList) {
+    private void resolveFile(String filePath) {
         try {
             File file = new File(filePath);
             if (file.exists()) {
                 if (file.isFile()) {
-                    replaceKey(file, keyList);
+                    mChildFileList.add(file);
                 } else {
                     File[] fileArray = file.listFiles();
                     assert fileArray != null;
                     for (File itemFile : fileArray) {
                         if (itemFile.isFile()) {
-                            replaceKey(itemFile, keyList);
+                            mChildFileList.add(itemFile);
                         } else {
-                            resolveFile(itemFile.getAbsolutePath(), keyList);
+                            resolveFile(itemFile.getAbsolutePath());
                         }
                     }
                 }
@@ -105,8 +114,16 @@ public class ReplaceKey {
         }
     }
 
+    private void reallyStartReplaceKey(List<KeyPair> keyList) {
+        System.out.println(TAG.concat("has ").concat(String.valueOf(mTotalFileCount).concat(" file will be replaced")));
+        while (!mChildFileList.isEmpty()){
+            replaceKey(mChildFileList.poll(), keyList);
+        }
+    }
+
     private void replaceKey(File file, List<KeyPair> keyList) {
         try {
+            System.out.println(TAG.concat("start replace file ").concat(file.getAbsolutePath()));
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
             String fileName = file.getName();
             int lastIndex = fileName.lastIndexOf(".");
@@ -116,20 +133,34 @@ public class ReplaceKey {
             if (outPutFile.exists()) outPutFile.delete();
             if (outPutFile.createNewFile()) {
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outPutFile)));
+                StringBuilder builder = new StringBuilder();
                 String line = null;
+                String lineSeparator = "\n";
                 while ((line = bufferedReader.readLine()) != null) {
-                    for (KeyPair itemKeyPair : keyList) {
-                        System.out.println("line=".concat(line).concat(",").concat(itemKeyPair.toString()));
-                        line = line.replaceAll(itemKeyPair.mOldKey, itemKeyPair.mNewKey);
-                    }
-                    bufferedWriter.write(line);
-                    bufferedWriter.newLine();
+                    builder.append(line);
+                    builder.append(lineSeparator);
                 }
                 bufferedReader.close();
+                String content = builder.toString();
+                if (content.length() > 0) {
+                    for (KeyPair itemKeyPair : keyList) {
+                        content = content.replaceAll(itemKeyPair.mOldKey, itemKeyPair.mNewKey);
+                    }
+                }
+                bufferedReader.close();
+                bufferedWriter.write(content);
                 bufferedWriter.flush();
                 bufferedWriter.close();
-                file.delete();
-                outPutFile.renameTo(file);
+                if (file.delete()) {
+                    outPutFile.renameTo(file);
+                    System.out.println(TAG.concat("File:").concat(file.getAbsolutePath()).concat(" replace complete"));
+                }
+                else {
+                    System.out.println(TAG.concat("File:").concat(file.getAbsolutePath()).concat(" replace error"));
+                }
+                mCompleteFileCount.incrementAndGet();
+                System.out.println(TAG.concat("File Replace Progress======").concat(String.valueOf(mCompleteFileCount)).concat("/").concat(String.valueOf(mTotalFileCount))
+                        .concat(",left").concat(String.valueOf(mTotalFileCount-mCompleteFileCount.get())).concat(" file waited to be replaced"));
             }
         } catch (Exception e) {
             e.printStackTrace();

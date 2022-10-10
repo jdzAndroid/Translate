@@ -1,10 +1,12 @@
-package com.jdz.translatetool;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.jdz.translatetool.a;
 
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.jdz.translatetool.R;
+
+public class MainActivity3 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

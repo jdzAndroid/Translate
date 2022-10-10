@@ -97,7 +97,6 @@ public class FindKey {
             outPutDocument.setXmlStandalone(true);
             Element outputElement = outPutDocument.createElement("resources");
             for (int i = 0; i <= Integer.MAX_VALUE - 1; i++) {
-                System.out.println("i="+i);
                 if (i < mConfig.mStartLine) continue;
                 if (i>mConfig.mEndLine)break;
                 try {
