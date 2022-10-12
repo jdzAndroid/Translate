@@ -69,8 +69,8 @@ public class ReplaceKey {
                 String oldKeyValue = oldKeyNode.getNodeValue();
                 String newKeyValue = newKeyNode.getNodeValue();
                 if (oldKeyValue != null && oldKeyValue.length() > 0 && newKeyValue != null && newKeyValue.length() > 0) {
-                    keyPairList.add(new KeyPair(preFix.concat(oldKeyValue), preFix.concat(newKeyValue)));
-                    keyPairList.add(new KeyPair(String.format(prefix_xml, oldKeyValue), String.format(prefix_xml, newKeyValue)));
+                    keyPairList.add(new KeyPair(preFix.concat(oldKeyValue), preFix.concat(newKeyValue),oldKeyValue,newKeyValue));
+                    keyPairList.add(new KeyPair(String.format(prefix_xml, oldKeyValue), String.format(prefix_xml, newKeyValue),oldKeyValue,newKeyValue));
                 }
             }
         } catch (Exception e) {
@@ -81,13 +81,17 @@ public class ReplaceKey {
             return;
         }
 
-        Collections.sort(keyPairList, new Comparator<KeyPair>() {
+        Collections.sort(keyPairList, new Comparator<>() {
             @Override
             public int compare(KeyPair pre, KeyPair next) {
-                return pre.mOldKey.length()-next.mOldKey.length();
+                return -pre.mOriginalOldKey.length() + next.mOriginalOldKey.length();
             }
         });
 
+        for (KeyPair keyPair : keyPairList) {
+            System.out.println(keyPair.mOriginalOldKey.length());
+            System.out.println(keyPair.toString());
+        }
         for (String itemFilePath : mReplaceKeyConfig.mCodeFilePathList) {
             resolveFile(itemFilePath);
         }
@@ -179,10 +183,14 @@ public class ReplaceKey {
     private class KeyPair {
         public String mOldKey;
         public String mNewKey;
+        public String mOriginalOldKey;
+        public String mOriginalNewKey;
 
-        public KeyPair(String oldKey, String newKey) {
+        public KeyPair(String oldKey, String newKey,String originalOldKey,String originalNewKey) {
             mOldKey = oldKey;
             mNewKey = newKey;
+            mOriginalOldKey=originalOldKey;
+            mOriginalNewKey=originalNewKey;
         }
 
         @Override
