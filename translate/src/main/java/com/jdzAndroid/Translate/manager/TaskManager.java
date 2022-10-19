@@ -1,5 +1,7 @@
 package com.jdzAndroid.Translate.manager;
 
+import com.jdzAndroid.Translate.checkkey.CheckKey;
+import com.jdzAndroid.Translate.checkkey.CheckKeyConfig;
 import com.jdzAndroid.Translate.filterKey.RemoveKey;
 import com.jdzAndroid.Translate.filterKey.RemoveKeyConfig;
 import com.jdzAndroid.Translate.findkey.FindKey;
@@ -8,6 +10,8 @@ import com.jdzAndroid.Translate.replaceKey.ReplaceKey;
 import com.jdzAndroid.Translate.replaceKey.ReplaceKeyConfig;
 import com.jdzAndroid.Translate.translate.Translate;
 import com.jdzAndroid.Translate.translate.TranslateConfig;
+import com.jdzAndroid.Translate.translateByKey.TranslateByKey;
+import com.jdzAndroid.Translate.translateByKey.TranslateByKeyConfig;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -20,10 +24,14 @@ public class TaskManager implements Plugin<Project> {
         FindKeyConfig findKeyConfig = project.getExtensions().create("findKey", FindKeyConfig.class);
         RemoveKeyConfig removeKeyConfig = project.getExtensions().create("removeKey", RemoveKeyConfig.class);
         ReplaceKeyConfig replaceKeyConfig = project.getExtensions().create("replaceKey", ReplaceKeyConfig.class);
+        TranslateByKeyConfig translateByKeyConfig = project.getExtensions().create("translateByKey", TranslateByKeyConfig.class);
+        CheckKeyConfig checkKeyConfig = project.getExtensions().create("checkKey", CheckKeyConfig.class);
         project.getTasks().register("translate", task -> new Translate(translateConfig).translate());
         project.getTasks().register("findKey", task -> new FindKey(findKeyConfig).findKey());
         project.getTasks().register("removeKey", task -> new RemoveKey(removeKeyConfig).removeKey());
         project.getTasks().register("replaceKey", task -> new ReplaceKey(replaceKeyConfig).replaceKey());
+        project.getTasks().register("translateByKey", task -> new TranslateByKey(translateByKeyConfig).translate());
+        project.getTasks().register("checkKey", task -> new CheckKey(checkKeyConfig).startCheck());
     }
 
 //    generateMetadataFileForGreetingsPluginPluginMarkerMavenPublication - Generates the Gradle metadata file for publication 'greetingsPluginPluginMarkerMaven'.

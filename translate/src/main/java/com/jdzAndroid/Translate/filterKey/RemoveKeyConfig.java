@@ -7,7 +7,7 @@ public class RemoveKeyConfig {
     public List<String> mFilePathList;
     public List<String> mKeyList;
 
-    public void excludeKeyList(String... keyList){
+    public void removeKeyList(String... keyList){
         if (keyList==null||keyList.length==0)return;
         mKeyList=new ArrayList<>();
         mKeyList.addAll(Arrays.asList(keyList));

@@ -19,33 +19,37 @@ android {
     }
 }
 
-replaceKey{
-    keyFilePath 'D:\\cc\\zh.xml'
-    oldKeyName 'name'
-    newKeyName 'name2'
-    codeFilePath 'E:\\AndroidProject\\Translate\\app\\src\\main\\java\\com\\jdz\\translatetool','E:\\AndroidProject\\Translate\\app\\src\\main\\res\\layout'
-}
+//replaceKey{
+//    keyFilePath 'D:\\cc\\zh.xml'
+//    oldKeyName 'name'
+//    newKeyName 'name2'
+//    codeFilePath 'E:\\AndroidProject\\Translate\\app\\src\\main\\java\\com\\jdz\\translatetool','E:\\AndroidProject\\Translate\\app\\src\\main\\res\\layout'
+//}
 
-//config {
+//translateByKey {
 //    excelFilePath 'D:\\cc\\cc.xlsx'//用于获取翻译的源excel文件路径
 //    languageCode 'zh,en,de,es,fr,it,ja,ru,pt,ko,tr,cs,nl,el,sk'//需要翻译的国家语言代码
 //    column '4,5,6,7,8,9,10,11,12,13,14,15,16,17,15'//国家所对应的翻译在源excel文件中的列编号
-//    ignoreSplit ','
-//    ignoreValue '%d,%s,%1\\$s,%2\\$s,%3\\$s,%4\\$s,%1d,%2d'//在比较文本时候忽略的字符,默认-杠分开
+//    ignoreValue 'key_'//在比较文本时候忽略的字符,默认-杠分开
 //    compareFilePath 'D:\\cc\\zh.xml'//用于查找Key的xml文件
 //    outPath 'D:\\cc\\output'//生成的翻译文件存储路径
+//    ignoreSplit ','
 //    startLine 0//从源Excel第几行开始翻译
 //    replacedValue '%d,%1d,%2d,%3d,%4d'//需要被替换的内容
 //    newValue '%s,%1\\$s,%2\\$s,%3\\$s,%4\\$s'//被替换后的内容
 //    sheetIndex 0
-//    compareIndex 4
 //    keyIndex 1
 //}
 
-//removeKey {
-//    filePathList 'D:\\cc\\a'
-//    excludeKeyList 'name2','name3'
-//}
+removeKey {
+    filePathList 'D:\\cc\\zh.xml'
+    removeKeyList 'oldKey'
+}
+
+checkKey{
+    checkFile 'D:\\cc\\aaa'
+    errorInfoFile 'D:\\cc\\error'
+}
 
 //config {
 //    excelFilePath 'D:\\cc\\cc.xlsx'//用于获取翻译的源excel文件路径
