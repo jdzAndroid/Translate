@@ -12,6 +12,8 @@ import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -68,8 +70,8 @@ public class ReplaceKey {
                 String oldKeyValue = oldKeyNode.getNodeValue();
                 String newKeyValue = newKeyNode.getNodeValue();
                 if (oldKeyValue != null && oldKeyValue.length() > 0 && newKeyValue != null && newKeyValue.length() > 0) {
-                    keyPairList.add(new KeyPair(preFix.concat(oldKeyValue), preFix.concat(newKeyValue)));
-                    keyPairList.add(new KeyPair(String.format(prefix_xml, oldKeyValue), String.format(prefix_xml, newKeyValue)));
+                    keyPairList.add(new KeyPair(preFix.concat(oldKeyValue), preFix.concat(newKeyValue),oldKeyValue,newKeyValue));
+                    keyPairList.add(new KeyPair(String.format(prefix_xml, oldKeyValue), String.format(prefix_xml, newKeyValue),oldKeyValue,newKeyValue));
                 }
             }
         } catch (Exception e) {
@@ -171,10 +173,14 @@ public class ReplaceKey {
     private class KeyPair {
         public String mOldKey;
         public String mNewKey;
+        public String mOriginalOldKey;
+        public String mOriginalNewKey;
 
-        public KeyPair(String oldKey, String newKey) {
+        public KeyPair(String oldKey, String newKey,String originalOldKey,String originalNewKey) {
             mOldKey = oldKey;
             mNewKey = newKey;
+            mOriginalOldKey=originalOldKey;
+            mOriginalNewKey=originalNewKey;
         }
 
         @Override

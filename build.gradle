@@ -2,11 +2,14 @@
 
 buildscript {
     repositories {
-        google()
-        jcenter()
+//        maven {
+//            url "https://plugins.gradle.org/m2/"
+//        }
         maven {
             url('/local-plugin-repository')
         }
+        google()
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.1'
