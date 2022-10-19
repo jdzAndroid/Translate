@@ -14,6 +14,7 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -80,18 +81,7 @@ public class ReplaceKey {
             System.out.println(TAG.concat("not found valid oldKeyValue and newKeyValue"));
             return;
         }
-
-        Collections.sort(keyPairList, new Comparator<>() {
-            @Override
-            public int compare(KeyPair pre, KeyPair next) {
-                return -pre.mOriginalOldKey.length() + next.mOriginalOldKey.length();
-            }
-        });
-
-        for (KeyPair keyPair : keyPairList) {
-            System.out.println(keyPair.mOriginalOldKey.length());
-            System.out.println(keyPair.toString());
-        }
+        keyPairList.sort((previous, next) -> -(previous.mOldKey.length()-next.mOldKey.length()));
         for (String itemFilePath : mReplaceKeyConfig.mCodeFilePathList) {
             resolveFile(itemFilePath);
         }
