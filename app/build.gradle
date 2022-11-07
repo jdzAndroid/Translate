@@ -18,6 +18,31 @@ android {
         }
     }
 }
+//findUnUsedMipMap{
+//    codePathList 'D:\\VeryFitLife\\V2.3.3\\VeryFitLife\\app\\src\\main\\java\\com\\ido\\life',
+//            'D:\\VeryFitLife\\V2.3.3\\VeryFitLife\\app\\src\\main\\res\\layout',
+//            'D:\\VeryFitLife\\V2.3.3\\VeryFitLife\\app\\src\\main\\res\\drawable',
+//            'D:\\VeryFitLife\\V2.3.3\\VeryFitLife\\app\\src\\main\\res\\animator'
+//    errorInfoOutPath 'C:\\Users\\jiangdz\\Desktop\\临时文件'
+//    sourceFilePath 'D:\\VeryFitLife\\V2.3.3\\VeryFitLife\\app\\src\\main\\res\\mipmap-cs',
+//            'D:\\VeryFitLife\\V2.3.3\\VeryFitLife\\app\\src\\main\\res\\mipmap-de',
+//    'D:\\VeryFitLife\\V2.3.3\\VeryFitLife\\app\\src\\main\\res\\mipmap-el',
+//    'D:\\VeryFitLife\\V2.3.3\\VeryFitLife\\app\\src\\main\\res\\mipmap-es',
+//    'D:\\VeryFitLife\\V2.3.3\\VeryFitLife\\app\\src\\main\\res\\mipmap-fr',
+//    'D:\\VeryFitLife\\V2.3.3\\VeryFitLife\\app\\src\\main\\res\\mipmap-hdpi',
+//    'D:\\VeryFitLife\\V2.3.3\\VeryFitLife\\app\\src\\main\\res\\mipmap-it',
+//    'D:\\VeryFitLife\\V2.3.3\\VeryFitLife\\app\\src\\main\\res\\mipmap-ja',
+//    'D:\\VeryFitLife\\V2.3.3\\VeryFitLife\\app\\src\\main\\res\\mipmap-ko',
+//    'D:\\VeryFitLife\\V2.3.3\\VeryFitLife\\app\\src\\main\\res\\mipmap-nl',
+//    'D:\\VeryFitLife\\V2.3.3\\VeryFitLife\\app\\src\\main\\res\\mipmap-pt',
+//    'D:\\VeryFitLife\\V2.3.3\\VeryFitLife\\app\\src\\main\\res\\mipmap-ru',
+//    'D:\\VeryFitLife\\V2.3.3\\VeryFitLife\\app\\src\\main\\res\\mipmap-sk',
+//    'D:\\VeryFitLife\\V2.3.3\\VeryFitLife\\app\\src\\main\\res\\mipmap-tr',
+//    'D:\\VeryFitLife\\V2.3.3\\VeryFitLife\\app\\src\\main\\res\\mipmap-xhdpi',
+//    'D:\\VeryFitLife\\V2.3.3\\VeryFitLife\\app\\src\\main\\res\\mipmap-xxhdpi',
+//    'D:\\VeryFitLife\\V2.3.3\\VeryFitLife\\app\\src\\main\\res\\mipmap-xxxhdpi',
+//    'D:\\VeryFitLife\\V2.3.3\\VeryFitLife\\app\\src\\main\\res\\mipmap-zh'
+//}
 
 //replaceKey{
 //    keyFilePath 'D:\\cc\\zh.xml'
@@ -27,14 +52,14 @@ android {
 //}
 
 //translateByKey {
-//    excelFilePath 'D:\\cc\\cc.xlsx'//用于获取翻译的源excel文件路径
+//    excelFilePath 'D:\\cc\\工作簿(4).xlsx'//用于获取翻译的源excel文件路径
 //    languageCode 'zh,en,de,es,fr,it,ja,ru,pt,ko,tr,cs,nl,el,sk'//需要翻译的国家语言代码
 //    column '4,5,6,7,8,9,10,11,12,13,14,15,16,17,15'//国家所对应的翻译在源excel文件中的列编号
 //    ignoreSplit ','
-//    ignoreValue '%d,%s,%1\\$s,%2\\$s,%3\\$s,%4\\$s,%1d,%2d,&gt;,&lt;,&amp;, '//在比较文本时候忽略的字符,默认-杠分开
-//    compareFilePath 'D:\\cc\\zh.xml'//用于查找Key的xml文件
+//    ignoreValue 'key_'//在比较文本时候忽略的字符,默认-杠分开
+//    compareFilePath 'D:\\cc\\de.xml'//用于查找Key的xml文件
 //    outPath 'D:\\cc\\output'//生成的翻译文件存储路径
-//    startLine 0//从源Excel第几行开始翻译
+//    startLine 1//从源Excel第几行开始翻译
 //    replacedValue '%d,%1d,%2d,%3d,%4d,%1\\$d,%2\\$d,%3\\$d,%4\\$d,%1\\$s,%2\\$s,%3\\$s,%4\\$s'//需要被替换的内容
 //    newValue '%s,%1\\$s,%2\\$s,%3\\$s,%4\\$s,%1\\$s,%2\\$s,%3\\$s,%4\\$s,%1\\$s,%2\\$s,%3\\$s,%4\\$s'//被替换后的内容
 //    sheetIndex 0
@@ -64,7 +89,7 @@ android {
 //}
 
 //removeKey {
-//    filePathList 'D:\\cc\\zh.xml'
+//    filePathList 'D:\\VeryFitLife\\V2.3.3\\VeryFitLife\\app\\src\\main\\res\\values\\strings.xml'
 //    removeKeyList 'oldKey'
 //}
 //
@@ -72,22 +97,24 @@ android {
 //    checkFile 'D:\\cc\\aaa'
 //    errorInfoFile 'D:\\cc\\error'
 //}
-
+//
 //config {
-//    excelFilePath 'D:\\cc\\cc.xlsx'//用于获取翻译的源excel文件路径
-//    languageCode 'zh,en,de,es,fr,it,ja,ru,pt,ko,tr,cs,nl,gr'//需要翻译的国家语言代码
-//    column '0,1,2,3,4,5,6,7,8,9,10,11,12,13'//国家所对应的翻译在源excel文件中的列编号
-//    ignoreSplit '-'
-//    ignoreValue ',-;-\\$,%1$s,%2$s,%3$s'//在比较文本时候忽略的字符,默认-杠分开
-//    compareFilePath 'D:\\cc\\zh.xml'//用于查找Key的xml文件
+//    excelFilePath 'D:\\cc\\工作簿(5).xlsx'//用于获取翻译的源excel文件路径
+//    languageCode 'zh,en,de,es,fr,it,ja,ru,pt,ko,tr,cs,nl,el,sk'//需要翻译的国家语言代码
+//    column '4,5,6,7,8,9,10,11,12,13,14,15,16,17,15'//国家所对应的翻译在源excel文件中的列编号
+//    ignoreSplit ','
+//    ignoreValue '%d,%s,%1\\$s,%2\\$s,%3\\$s,%4\\$s,%1d,%2d,&gt;,&lt;,&amp;, '//在比较文本时候忽略的字符,默认-杠分开
+//    compareFilePath 'D:\\cc\\wait_process.xml'//用于查找Key的xml文件
 //    outPath 'D:\\cc\\output'//生成的翻译文件存储路径
-//    startLine 1//从源Excel第几行开始翻译
-//    replacedValue '最'//需要被替换的内容
-//    newValue 'medium'//被替换后的内容
+//    startLine 0//从源Excel第几行开始翻译
+//    replacedValue '%d,%1d,%2d,%3d,%4d,%1\\$d,%2\\$d,%3\\$d,%4\\$d,%1\\$s,%2\\$s,%3\\$s,%4\\$s'//需要被替换的内容
+//    newValue '%s,%1\\$s,%2\\$s,%3\\$s,%4\\$s,%1\\$s,%2\\$s,%3\\$s,%4\\$s,%1\\$s,%2\\$s,%3\\$s,%4\\$s'//被替换后的内容
 //    sheetIndex 0
-//    compareIndex 0
-//    placeholder '%1\$s,%2\$s,%3\$s'
+//    compareIndex 4
+//    showOldKey true
+//    keyIndex 1
 //}
+
 //xml2xls{
 //    sourcePath 'C:\\Users\\Administrator\\Desktop\\aa\\zh.xml'
 //    targetPath 'C:\\Users\\Administrator\\Desktop\\aa'

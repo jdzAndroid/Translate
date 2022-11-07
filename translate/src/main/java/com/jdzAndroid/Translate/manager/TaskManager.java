@@ -6,6 +6,8 @@ import com.jdzAndroid.Translate.filterKey.RemoveKey;
 import com.jdzAndroid.Translate.filterKey.RemoveKeyConfig;
 import com.jdzAndroid.Translate.findkey.FindKey;
 import com.jdzAndroid.Translate.findkey.FindKeyConfig;
+import com.jdzAndroid.Translate.findunused.FindUnUserMipmap;
+import com.jdzAndroid.Translate.findunused.FindUnUserMipmapConfig;
 import com.jdzAndroid.Translate.replaceKey.ReplaceKey;
 import com.jdzAndroid.Translate.replaceKey.ReplaceKeyConfig;
 import com.jdzAndroid.Translate.translate.Translate;
@@ -26,12 +28,14 @@ public class TaskManager implements Plugin<Project> {
         ReplaceKeyConfig replaceKeyConfig = project.getExtensions().create("replaceKey", ReplaceKeyConfig.class);
         TranslateByKeyConfig translateByKeyConfig = project.getExtensions().create("translateByKey", TranslateByKeyConfig.class);
         CheckKeyConfig checkKeyConfig = project.getExtensions().create("checkKey", CheckKeyConfig.class);
+        FindUnUserMipmapConfig findUnUserMipmapConfig = project.getExtensions().create("findUnUsedMipMap", FindUnUserMipmapConfig.class);
         project.getTasks().register("translate", task -> new Translate(translateConfig).translate());
         project.getTasks().register("findKey", task -> new FindKey(findKeyConfig).findKey());
         project.getTasks().register("removeKey", task -> new RemoveKey(removeKeyConfig).removeKey());
         project.getTasks().register("replaceKey", task -> new ReplaceKey(replaceKeyConfig).replaceKey());
         project.getTasks().register("translateByKey", task -> new TranslateByKey(translateByKeyConfig).translate());
         project.getTasks().register("checkKey", task -> new CheckKey(checkKeyConfig).startCheck());
+        project.getTasks().register("findUnUsedMipMap", task -> new FindUnUserMipmap(findUnUserMipmapConfig).startFind());
     }
 
 //    generateMetadataFileForGreetingsPluginPluginMarkerMavenPublication - Generates the Gradle metadata file for publication 'greetingsPluginPluginMarkerMaven'.

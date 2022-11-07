@@ -111,7 +111,6 @@ public class TranslateByKey {
                     int value = Math.round(Float.parseFloat(itemKey));
                     itemKey = String.valueOf(value);
                 } catch (Exception e) {
-                    e.printStackTrace();
                 }
                 Map<String, String> itemMap = new HashMap<>();
                 if (mTranslateConfig.mIgnoreValueList.size() > 0) {
@@ -119,6 +118,7 @@ public class TranslateByKey {
                         itemKey = itemKey.replaceAll(ignoreValue, "");
                     }
                 }
+                System.out.println(itemKey);
                 for (int j = 0; j < languageCodeSize; j++) {
                     XSSFCell cell = row.getCell(mTranslateConfig.mColumnList.get(j));
                     if (cell != null) {

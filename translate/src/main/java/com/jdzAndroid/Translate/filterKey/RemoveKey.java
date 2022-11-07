@@ -1,6 +1,5 @@
 package com.jdzAndroid.Translate.filterKey;
 
-import org.apache.poi.sl.image.ImageHeaderEMF;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
